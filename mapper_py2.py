@@ -24,11 +24,13 @@ for line in sys.stdin:
         continue
     numline += 1
     text = re.sub(r'[^A-Za-z\\s]', ' ', text)
+    #text = re.sub(r'(.)\1+', r'\1\1', text)  # long cccccccc...
+    #text = re.sub(r'^(.+?)\1+$', r'\1', text)  # long abababab...
     words = re.split("\W*\s+\W*", text, flags=re.UNICODE)
     for word in words:
         word = word.lower()
         # print >> sys.stderr, "reporter:counter:Custom stats,All words,{}".format(1)
-        if word in stop_words or len(word) < 3:
+        if word in stop_words or len(word) < 3 or len(word) > 16:
             # print >> sys.stderr, "reporter:counter:Custom stats,Stop words,{}".format(1)
             continue
         if len(word) > mx:
