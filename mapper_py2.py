@@ -39,11 +39,7 @@ for line in sys.stdin:
             mxstr = word
             mxnumline = numline
         sortword = ''.join(sorted(word))
-        per = itertools.permutations(word)
-        i = 0
-        for val in per:
-            i += 1
-        print "%s\t%s\t%d\t%d" % (sortword, word, 1, i)
+        print "%s\t%s\t%d" % (sortword, word, 1)
 print "mxnumline = %d mx = %d %s" % (mxnumline, mx, mxstr)
 
 
