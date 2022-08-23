@@ -3,6 +3,7 @@
 
 import sys
 import re
+import itertools
 
 reload(sys)
 sys.setdefaultencoding('utf-8') # required to convert to unicode
@@ -37,7 +38,12 @@ for line in sys.stdin:
             mx = len(word)
             mxstr = word
             mxnumline = numline
-        print "%s\t%d" % (word, 1)
+        sortword = ''.join(sorted(word))
+        per = itertools.permutations(word)
+        i = 0
+        for val in per:
+            i += 1
+        print "%s\t%s\t%d\t%d" % (sortword, word, 1, i)
 print "mxnumline = %d mx = %d %s" % (mxnumline, mx, mxstr)
 
 
