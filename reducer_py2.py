@@ -5,35 +5,39 @@ import random
 
 # python mapper_py2.py < part1.txt | sort | python reducer_py2.py | head -10000
 # if head < 10000 will be "BrokenPipeError: [Errno 32] Broken pipe" generated
+# python mapper_py2.py < test.txt | sort | python reducer_py2.py
 
 reload(sys)
 sys.setdefaultencoding('utf-8')  # required to convert to unicode
 
-i = 1
-rnd_num = random.randint(1, 5)
-out_str = ""
+prev_sortword = ""
+voc = {}
+count = 0
 
 for line in sys.stdin:
     try:
-        line = unicode(line.strip("\n"))
-        line = unicode(line.strip("\t"))
+        #line = unicode(line.strip("\n"))
+        sortword, word, one = unicode(line.strip("\n")).split('\t', 2)
     except ValueError as e:
         continue
     else:
-        line = line[5:]
-
-        if i == rnd_num:
-            out_str = out_str + line
-            print "%s" % out_str
-            i = 1
-            rnd_num = random.randint(1, 5)
-            out_str = ""
+        # print "%s\t%s\t%s" % (sortword, word, one)
+        if prev_sortword == "":
+            prev_sortword = sortword
+            count += 1
         else:
-            out_str = out_str + line + ","
-            i += 1
+            if sortword == prev_sortword:
+                count += 1
+            else:
+                print "%s\t%d" % (prev_sortword, count)
+                prev_sortword = sortword
+                count = 1
+if count > 0:
+    print "%s\t%d" % (sortword, count)
 
-if len(out_str) > 1:
-    if out_str[-1] == ',':
-        out_str = out_str[:-1]
-    print "%s" % out_str
+
+
+
+
+
 

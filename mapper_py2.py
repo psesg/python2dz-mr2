@@ -40,7 +40,7 @@ for line in sys.stdin:
             mxnumline = numline
         sortword = ''.join(sorted(word))
         print "%s\t%s\t%d" % (sortword, word, 1)
-print "mxnumline = %d mx = %d %s" % (mxnumline, mx, mxstr)
+#print "mxnumline = %d mx = %d %s" % (mxnumline, mx, mxstr)
 
 
 
