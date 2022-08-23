@@ -36,7 +36,7 @@ for line in sys.stdin:
             mxstr = word
             mxnumline = numline
         print "%s\t%d" % (word, 1)
-print "mx = %d %s" % (mx, mxstr)
+print "mxnumline = %d mx = %d %s" % (mxnumline, mx, mxstr)
 
 
 
