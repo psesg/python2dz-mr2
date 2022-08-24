@@ -30,9 +30,7 @@ for line in sys.stdin:
     words = re.split("\W*\s+\W*", text, flags=re.UNICODE)
     for word in words:
         word = word.lower()
-        # print >> sys.stderr, "reporter:counter:Custom stats,All words,{}".format(1)
         if word in stop_words or len(word) < 3 or len(word) > 16:
-            # print >> sys.stderr, "reporter:counter:Custom stats,Stop words,{}".format(1)
             continue
         if len(word) > mx:
             mx = len(word)

@@ -17,12 +17,10 @@ count = 0
 
 for line in sys.stdin:
     try:
-        #line = unicode(line.strip("\n"))
         sortword, word, one = unicode(line.strip("\n")).split('\t', 2)
     except ValueError as e:
         continue
     else:
-        # print "%s\t%s\t%s" % (sortword, word, one)
         if prev_sortword == "":
             prev_sortword = sortword
             count += 1
@@ -35,7 +33,6 @@ for line in sys.stdin:
                 sort_voc_str = ""
                 sort_voc = OrderedDict(sorted(voc.items(), key=operator.itemgetter(1), reverse=True))
                 for i, (k, v) in enumerate(sort_voc.items()):
-                    #print(i, k, v)
                     if i < 5:
                         sort_voc_str = sort_voc_str + k + ":" + str(v) + ";"  # + "[" + str(i) + "]"
                 print "%s\t%d\t%s" % (prev_sortword, count, sort_voc_str)
@@ -47,7 +44,6 @@ if count > 0:
     sort_voc_str = ""
     sort_voc = OrderedDict(sorted(voc.items(), key=operator.itemgetter(1), reverse=True))
     for i, (k, v) in enumerate(sort_voc.items()):
-        # print(i, k, v)
         if i < 5:
             sort_voc_str = sort_voc_str + k + ":" + str(v) + ";"  # + "[" + str(i) + "]"
     print "%s\t%d\t%s" % (prev_sortword, count, sort_voc_str)
