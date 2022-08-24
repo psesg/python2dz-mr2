@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
 import sys
-import random
+import operator
 
 # python mapper_py2.py < part1.txt | sort | python reducer_py2.py | head -10000
 # if head < 10000 will be "BrokenPipeError: [Errno 32] Broken pipe" generated
-# python mapper_py2.py < test.txt | sort | python reducer_py2.py
+# python mapper_py2.py < articles-part.txt | sort | python reducer_py2.py | sort -k2,2nr -k1
 
 reload(sys)
 sys.setdefaultencoding('utf-8')  # required to convert to unicode
@@ -25,15 +25,29 @@ for line in sys.stdin:
         if prev_sortword == "":
             prev_sortword = sortword
             count += 1
+            voc.update({word: count})
         else:
             if sortword == prev_sortword:
                 count += 1
+                voc.update({word: count})
             else:
-                print "%s\t%d" % (prev_sortword, count)
+                sort_voc_str = ""
+                sort_voc = dict(sorted(voc.items(), key=operator.itemgetter(1), reverse=True))
+                for i, (k, v) in enumerate(sort_voc.items()):
+                    #print(i, k, v)
+                    sort_voc_str = sort_voc_str + k + ":" + str(v) + ";"
+                print "%s\t%d\t%s" % (prev_sortword, count, sort_voc_str)
                 prev_sortword = sortword
                 count = 1
+                voc = {}
+                voc.update({word: count})
 if count > 0:
-    print "%s\t%d" % (sortword, count)
+    sort_voc_str = ""
+    sort_voc = dict(sorted(voc.items(), key=operator.itemgetter(1), reverse=True))
+    for i, (k, v) in enumerate(sort_voc.items()):
+        # print(i, k, v)
+        sort_voc_str = sort_voc_str + k + ":" + str(v) + ";"
+    print "%s\t%d\t%s" % (prev_sortword, count, sort_voc_str)
 
 
 
