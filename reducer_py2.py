@@ -4,9 +4,7 @@ import sys
 import operator
 from collections import OrderedDict
 
-# python mapper_py2.py < part1.txt | sort | python reducer_py2.py | head -10000
-# if head < 10000 will be "BrokenPipeError: [Errno 32] Broken pipe" generated
-# python mapper_py2.py < articles-part.txt | sort | python reducer_py2.py | sort -k2,2nr -k1
+# python mapper_py2.py < articles-part.txt | sort | python reducer_py2.py | sort -k2,2nr -k1 | head -10
 
 reload(sys)
 sys.setdefaultencoding('utf-8')  # required to convert to unicode
