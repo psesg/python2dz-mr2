@@ -2,6 +2,7 @@
 
 import sys
 import operator
+from collections import OrderedDict
 
 # python mapper_py2.py < part1.txt | sort | python reducer_py2.py | head -10000
 # if head < 10000 will be "BrokenPipeError: [Errno 32] Broken pipe" generated
@@ -25,28 +26,30 @@ for line in sys.stdin:
         if prev_sortword == "":
             prev_sortword = sortword
             count += 1
-            voc.update({word: count})
+            voc[word] = voc.get(word, 0) + 1
         else:
             if sortword == prev_sortword:
                 count += 1
-                voc.update({word: count})
+                voc[word] = voc.get(word, 0) + 1
             else:
                 sort_voc_str = ""
-                sort_voc = dict(sorted(voc.items(), key=operator.itemgetter(1), reverse=True))
+                sort_voc = OrderedDict(sorted(voc.items(), key=operator.itemgetter(1), reverse=True))
                 for i, (k, v) in enumerate(sort_voc.items()):
                     #print(i, k, v)
-                    sort_voc_str = sort_voc_str + k + ":" + str(v) + ";"
+                    if i < 5:
+                        sort_voc_str = sort_voc_str + k + ":" + str(v) + ";"  # + "[" + str(i) + "]"
                 print "%s\t%d\t%s" % (prev_sortword, count, sort_voc_str)
                 prev_sortword = sortword
                 count = 1
                 voc = {}
-                voc.update({word: count})
+                voc[word] = voc.get(word, 0) + 1
 if count > 0:
     sort_voc_str = ""
-    sort_voc = dict(sorted(voc.items(), key=operator.itemgetter(1), reverse=True))
+    sort_voc = OrderedDict(sorted(voc.items(), key=operator.itemgetter(1), reverse=True))
     for i, (k, v) in enumerate(sort_voc.items()):
         # print(i, k, v)
-        sort_voc_str = sort_voc_str + k + ":" + str(v) + ";"
+        if i < 5:
+            sort_voc_str = sort_voc_str + k + ":" + str(v) + ";"  # + "[" + str(i) + "]"
     print "%s\t%d\t%s" % (prev_sortword, count, sort_voc_str)
 
 
