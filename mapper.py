@@ -30,7 +30,7 @@ for line in sys.stdin:
     words = re.split("\W*\s+\W*", text, flags=re.UNICODE)
     for word in words:
         word = word.lower()
-        if word in stop_words or len(word) < 3 or len(word) > 16:
+        if len(word) < 3 or len(word) > 16: # word in stop_words or
             continue
         if len(word) > mx:
             mx = len(word)
